@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="page-header mt-5" id="banner">
+  <%= render 'shared/error_messages' %>
+    <p class="stile-news">
+      <strong>Skypeちゃんねるだよｗへようこそ！</strong><br>
+      ここはSkypeやLINEなど、<br>ネットの友だちが見つかる掲示板です。<br>
+      サイトに関するご提案は Skype ID:<a href="見て">未定</a> へどうぞ
+      🤧	<br>
+    </p>
+    <div class="d-grid gap-2 col-xs-12 col-md-6 mt-3 mx-auto">
+      <%= link_to '投稿する', new_post_path, {class: "btn btn-primary"} %>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 col-md-7 col-sm-6">
+        <h1 style="margin-bottom: 0px;">投稿一覧</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <% @posts.each do |user| %>
+      <% if user.service_type == 'skype' %>
+        <div class="col-md-4">
+          <div class="<%= 'card border-primary h-100' if user.display_color == 'pink' %>
+                    <%= 'card border-info h-100' if user.display_color == 'blue' %>
+                    <%= 'card border-light h-100' if user.display_color == 'green' %>">
+            <div class="card-header">
+              <a class="text-decoration-none" href="<%= "skype:#{user.service_id}?chat"%>">
+                <%= image_tag 'sk_icon.png',size: '24x24' %>
+                <%=user.service_id.truncate(21,omission:"...")%>
+              </a>
+              <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_id%>">ID コピー</button>
+            </div>
+            <div class="card-body">
+              <!--<h4 class="card-title"><%= link_to user.name, user, {class: "text-decoration-none"} %></h4>-->
+              <div class="content-body">
+                <%if user.text.length > 150 %>
+                  <!--追記-->
+                  <div class="truncated">
+                    <%= link_to simple_format(user.text.truncate(150,omission:"")), user, {class: "text-decoration-none"} %>
+                    <!--class="see-more"を追記-->
+                    <button type="button" class="see-more btn btn-secondary btn-sm">もっと見る</button>
+                  </div>
+                  <!-- 追記 style= "display: noneで 通常時は見えなくする-->
+                  <div class="untruncated" style="display: none">
+                    <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %></p>
+                  </div>
+                <% else %>
+                  <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-md-4">
+          <div class="<%= 'card border-primary h-100' if user.display_color == 'pink' %>
+                    <%= 'card border-info h-100' if user.display_color == 'blue' %>
+                    <%= 'card border-light h-100' if user.display_color == 'green' %>">
+            <div class="card-header">
+              <a class="text-decoration-none" href="<%= user.service_url %>">
+                <%= image_tag 'line_icon.png',size: '24x24' %>
+                <%=user.service_url.truncate(21,omission:"...") if user.service_url?%>
+              </a>
+              <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_url%>">リンク コピー</button>
+            </div>
+            <div class="card-body">
+              <!--<h4 class="card-title"><%= link_to user.name, user, {class: "text-decoration-none"} %></h4>-->
+              <div class="content-body">
+                <%if user.text.length > 150 %>
+                  <!--追記-->
+                  <div class="truncated">
+                    <%= link_to simple_format(user.text.truncate(150,omission:"")), user, {class: "text-decoration-none"} %>
+                    <!--class="see-more"を追記-->
+                    <button type="button" class="see-more btn btn-secondary btn-sm">もっと見る</button>
+                  </div>
+                  <!-- 追記 style= "display: noneで 通常時は見えなくする-->
+                  <div class="untruncated" style="display: none">
+                    <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %></p>
+                  </div>
+                <% else %>
+                  <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <%= paginate @posts %>
+</div>
+<script>
+  $('.see-more').click(function(){
+    console.log("================================================");
+    $(this).closest(".content-body").find(".truncated").hide();
+    $(this).closest(".content-body").find(".untruncated").show();
+  })
+  $('.id-copy').click(function(){    var type = "text/plain";
+    var blob = new Blob([$(this)[0].value], { type });
+    var data = [new ClipboardItem({ [type]: blob })];
+    navigator.clipboard.write(data).then(
+        function () {
+        },
+        function () {
+        }
+    );
+  })
+</script>

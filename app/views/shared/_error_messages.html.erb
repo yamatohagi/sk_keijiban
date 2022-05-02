@@ -1,0 +1,7 @@
+  <% if params[:errors].present? %>
+  <ul class="errors">
+    <% params[:errors].each do |e| %>
+      <div class="alert alert-warning p-2 text-centor"><%= e %></div>
+    <% end %>
+  </ul>
+<% end %>

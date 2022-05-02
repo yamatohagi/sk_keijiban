@@ -1,0 +1,159 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+
+ *= require_tree .
+ *= require_self
+ */
+
+.pagination {
+  justify-content: center;
+  padding: 50px;
+}
+
+#wrapper {
+  overflow: hidden;
+}
+
+.center-custom {
+  justify-content: center;
+}
+
+.stile-news {
+  text-align: center
+}
+
+.new-post {
+  width: 70%;
+}
+
+
+
+body {
+  background-image: linear-gradient(90deg, #33b7e2, #7075d7, #f86aa9);
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #ff7ab5;
+  border-color: #ff7ab5;
+}
+
+.card.border-primary .card-header {
+  background-color: #fe79b5 !important;
+  border-bottom: none;
+}
+
+.card.border-info .card-header {
+  // background-color: #4ed3ff !important;
+  background-color: rgb(29, 155, 240);
+  border-bottom: none;
+}
+
+.card.border-success .card-header {
+  background-color: #57e4b7 !important;
+  border-bottom: none;
+}
+
+.btn-primary:hover {
+  background-color: #fd9fff;
+  border-color: #fda4fe;
+}
+.card.border-light .card-header {
+  background-color: #74ff8ba6 !important;
+  border-bottom: none;
+  color: #343a40;
+}
+
+
+.btn-outline-light {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+img.search-icon {
+  margin-bottom: 2px;
+  margin-right: 7px;
+}
+
+div a img {
+  margin-right: 7px;
+  margin-bottom: 2px;
+}
+
+div.card-header {
+  padding-top: 19px;
+  padding-bottom: 10px
+}
+
+button.btn.btn-outline-secondary.btn-sm {
+  float: right;
+}
+button.btn.btn-outline-secondary.btn-sm {
+  height: 27px;
+  line-height: 19px;
+  font-size: 13px;
+}
+.btn-outline-secondary:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, .4);
+  border-color: rgba(255, 255, 255, .4)
+}
+
+.btn-check:active+.btn-outline-secondary,
+.btn-check:checked+.btn-outline-secondary,
+.btn-outline-secondary.active,
+.btn-outline-secondary.dropdown-toggle.show,
+.btn-outline-secondary:active {
+  color: rgb(232, 232, 232);
+  background-color: rgba(0, 0, 0, 0.4);
+  border-color: rgba(24, 23, 23, 0.4);
+  outline: none
+}
+.btn:focus {
+  box-shadow: none;
+}
+
+
+
+ul.nav.nav-tabs {
+  justify-content: center;
+}
+
+// div.row {
+//   justify-content: center;
+// }
+
+#formFile {
+  font-size:11px;
+
+}
+//スカイプチャンネルだよ
+a.navbar-brand.w-25 {
+  margin-top: 6px
+
+}
+
+//pagnation
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #f779b5;
+  border-color: #e83283;
+}
+
+//表示カラー
+.btn-check:active+.btn-outline-primary, .btn-check:checked+.btn-outline-primary, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show, .btn-outline-primary:active {
+  color: #fff;
+  background-color: #f77ab5;
+  border-color: #ff9ac9;
+}
+

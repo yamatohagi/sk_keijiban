@@ -1,0 +1,163 @@
+<div class="container">
+  <div class="page-header mt-5" id="banner">
+
+      <div class="stile-news p-4">
+      <h1>新規作成</h1>
+      <strong>投稿画面へようこそ！</strong><br>
+      <p>SkypeかLINEが選択できます。次回リリースでカカオも追加する予定です！</p>
+
+    </div>
+
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="tab" href="#skype">Skype</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#line">LINE</a>
+    </li>
+  </ul>
+  <div class="row" style="justify-content: center;">
+    <div class="col-md-6 col-md-offset-3 ">
+      <%= form_with model:@post, id: "form1", class: "needs-validation", html: {novalidate: true} do |f| %>
+        <div id="myTabContent" class="tab-content">
+          <div class="tab-pane fade active show" id="skype">
+            <div class="form-group">
+              <%= f.label :service_id,"Skype ID", class:"form-label mt-2"%>
+              <%= f.text_field :service_id, class: "form-control", one_required: "post_service_url" %>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="line">
+            <div class="form-group">
+              <label for="formFile" class="form-label mt-2" id="post_service_id_label">QRコード読み込み</label>
+              <input type="file" class="form-control mt-1" id="formFile" accept="image/jpeg, image/png" onchange="scan(event)">
+            </div>
+            <div class="form-group">
+              <label for="formFile" class="form-label mt-2 d-none" id="post_service_url_label">友達追加リンク</label>
+              <%= f.text_field :service_url, class: "form-control d-none", readonly: "", value: ""%>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :text,"本文" , class:"form-label mt-2"%>
+          <%= f.text_area :text, class: "form-control", required: "", rows:4%>
+          <span class="invalid-feedback">項目を入力してください.</span>
+        </div>
+        <%= f.label :password,"パスワード" , class:"form-label mt-2"%>
+        <%= f.text_field :password, class: "form-control", value: "1234", placeholder: "空白の場合は[1234]に自動設定",required: "" %>
+        <label for="exampleInputPassword1" class="form-label mt-2">表示カラー</label>
+        <div class="bs-component mb-3 text-center">
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="post[display_color]" id="display_color1" value="pink" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="display_color1">ピンク</label>
+            <input type="radio" class="btn-check" name="post[display_color]" id="display_color2" value="blue"autocomplete="off" >
+            <label class="btn btn-outline-info" for="display_color2">ブルー</label>
+            <input type="radio" class="btn-check" name="post[display_color]" id="display_color3" value="green" autocomplete="off" >
+            <label class="btn btn-outline-success" for="display_color3">グリーン</label>
+          </div>
+        </div>
+        <div class="bs-component mb-3 text-center">
+          <%= f.submit "投稿する", class: "btn btn-primary"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js" integrity="sha384-i4Tuh5Z0ns/3M0289mSougur8irvedWPBlwOcJ7ob5AK/rvN5tjkwzu7P1k1dThG" crossorigin="anonymous"></script>
+<script>
+  function scan(e) {
+    const files = e.target.files || e.dataTransfer.files;
+    if (!files.length) return;
+    const file = files[0];
+    const fileReader = new FileReader();
+    fileReader.onload = function(theFile) {
+      const image = new Image();
+      image.onload = function() {
+        // create a canvas in memory:
+        const canvas = document.createElement('canvas');
+        // canvas needs enough width and height to draw the qrcode image:
+        canvas.width = this.width;
+        canvas.height = this.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(image, 0, 0);
+        const imageData = ctx.getImageData(0, 0, this.width, this.height);
+        const data = jsQR(imageData.data, imageData.width, imageData.height);
+        if (data) {
+          const message = data.data;
+          if (message.indexOf('https://line.me/') === -1) {
+            alert("[ERROR] 読み取りできませんでした。");
+            return;
+          }
+          console.log("message:", message); // message: "あいうえお"
+          document.getElementById('post_service_url').value = message
+          document.getElementById('formFile').classList.add('d-none');
+          document.getElementById('post_service_id_label').classList.add('d-none');
+          document.getElementById('post_service_url').classList.remove('d-none');
+          document.getElementById('post_service_url_label').classList.remove('d-none');
+        }
+      };
+      const dataURL = theFile.target.result;
+      if (!dataURL || !dataURL.startsWith("data:image/")) {
+        alert("[ERROR] 読み取りできませんでした。");
+      }
+      image.src = dataURL;
+    };
+    fileReader.readAsDataURL(file);
+  }
+</script>
+<script type="text/javascript" language="JavaScript">
+  (function () {
+    function validation(event) {
+      form.querySelectorAll('.form-control').forEach(function (elm) {
+        var required = elm.required;
+        var one_element = elm.getAttribute('one_required');
+
+        //その他のバリデーション
+
+        if (true) {
+          if (required && (elm.value.length == 0)) {
+            elm.classList.add('is-invalid');
+            elm.classList.remove('is-valid');
+            event.preventDefault();
+            event.stopPropagation();
+          } else if (required) {
+            elm.classList.add('is-valid');
+            elm.classList.remove('is-invalid');
+          }
+        }
+        //one_elementのみ
+        if (one_element) {
+          one_element = document.getElementById(one_element)
+          elm_result = elm.value.length == 0;
+          one_element_result = one_element.value == 0
+          if (elm_result && one_element_result) {
+            elm.classList.add('is-invalid');
+            elm.classList.remove('is-valid');
+            one_element.classList.add('is-invalid');
+            one_element.classList.remove('is-valid');
+            document.getElementById('formFile').classList.add('is-invalid');
+            document.getElementById('formFile').classList.remove('is-valid');
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            elm.classList.add('is-valid');
+            elm.classList.remove('is-invalid');
+            one_element.classList.add('is-valid');
+            one_element.classList.remove('is-invalid');
+            //これコメントアウトしないとid入力した時に行っちゃう
+            // document.getElementById('formFile').add('is-valid');
+            // document.getElementById('formFile').remove('is-invalid');
+          }
+        }
+      });
+    }
+    var form = document.querySelector('#form1');
+    form.addEventListener('submit', function (event) {
+      validation(event);
+    });
+    form.addEventListener('focusout', function (event) {
+      validation(event);
+    });
+
+  })();
+</script>
