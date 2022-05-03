@@ -53,6 +53,9 @@ gem "jquery-rails"
 gem "will_paginate"
 gem "bootstrap-will_paginate"
 gem "kaminari"
+
+gem "importmap-rails"
+gem "propshaft"
 # Use Sass to process CSS
 # gem "sassc-rails"
 
