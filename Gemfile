@@ -70,6 +70,9 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "faker"
+  # ***** sudo 実行時にパスワード入力できるようにするため以下を追加 *****
+  gem "sshkit-sudo"
+  # ***** 以上を追加 *****
 
   # ***** 以下を追加 *****
   gem "capistrano", "~> 3.10", require: false
