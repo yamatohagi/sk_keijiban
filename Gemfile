@@ -46,6 +46,7 @@ gem "bootsnap", require: false
 
 # gem "bootstrap"
 # gem "bootswatch"
+gem "discard"
 
 gem "jquery-rails"
 

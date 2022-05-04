@@ -24,7 +24,7 @@ class PostsController < ApplicationController
 
   def destroy
     if params[:post][:password] == Post.find(params[:id]).password
-      Post.find(params[:id]).destroy
+      Post.find(params[:id]).discard
       redirect_to action: :index, errors: ["削除しました"]
     else
       redirect_to  id: params[:id], errors: ["パスワードが違います"]
