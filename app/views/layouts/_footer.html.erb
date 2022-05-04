@@ -1,0 +1,19 @@
+<footer id="footer">
+  <div class="container">
+    <div class="col mt-4" style="text-align:center;">
+      <ul class="list-unstyled" >
+        <br>
+        <%= link_to new_post_path, {class: "btn"}, target: "_blank" do %>
+          <%= image_tag 'post_new_icon.png',size: '18x18', class: "" %>
+        <% end %>
+        <a href="#top"><%= image_tag 'top_icon.png',size: '18x18', class: "" %></a>
+        <%= link_to search_posts_path, {class: "btn"}, target: "_blank" do %>
+          <%= image_tag 'search_icon.png',size: '18x18', class: "" %>
+        <% end %>
+      </ul>
+      © 2022- YN inc.
+      <p>Skypeちゃんねるだよｗに掲載されている全ての情報を無断で複製することを禁じます</a>
+    </div>
+    <br>
+  </div>
+</footer>

@@ -1,16 +1,20 @@
 <div class="container">
   <div class="page-header mt-5" id="banner">
-  <%= render 'shared/error_messages' %>
+    <div class="row">
+    <%= render 'shared/success_messages' %>
+  </div>
     <p class="stile-news">
       <strong>Skypeちゃんねるだよｗへようこそ！</strong><br>
-      ここはSkypeやLINEなど、<br>ネットの友だちが見つかる掲示板です。<br>
+      ここはSkypeやLINEなど、<br>
+      ネットの友だちが見つかる掲示板です。<br>
       サイトに関するご提案は Skype :<a href="skype:live:.cid.2331f6b775635cec?chat">ここ</a> へどうぞ
       🤧	<br>
     </p>
     <div class="d-grid gap-2 col-xs-12 col-md-6 mt-3 mx-auto">
-      <%= link_to '投稿する', new_post_path, {class: "btn btn-primary"} %>
+      <%= link_to new_post_path, {class: "btn btn-primary"} , target: "_blank" do %>
+        <%= image_tag 'post_new_icon.png',size: '17x18', style: "padding-bottom: 2px;" %>投稿する
+      <% end %>
     </div>
-
     <div class="row">
       <div class="col-lg-8 col-md-7 col-sm-6">
         <h1 style="margin-bottom: 0px;">投稿一覧</h1>
