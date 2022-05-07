@@ -33,11 +33,11 @@
                   たった今
                 <% elsif Time.now - user.created_at < 60%>
                   <%=(Time.now - user.created_at).round  %>秒前
-                <% elsif Time.now - user.created_at < 360%>
+                <% elsif Time.now - user.created_at < 3600%>
                   <%=((Time.now - user.created_at)/60).round  %>分前
-                <% elsif  Time.now - user.created_at < 3600%>
-                  <%=((Time.now - user.created_at)/360).round  %>時間前
                 <% elsif  Time.now - user.created_at < 86400%>
+                  <%=((Time.now - user.created_at)/3600).round  %>時間前
+                <% else %>
                   <%=user.created_at.strftime('%-m月%-d日')%>
                 <%end%>
               </span>
@@ -72,11 +72,11 @@
                   たった今
                 <% elsif Time.now - user.created_at < 60%>
                   <%=(Time.now - user.created_at).round  %>秒前
-                <% elsif Time.now - user.created_at < 360%>
+                <% elsif Time.now - user.created_at < 3600%>
                   <%=((Time.now - user.created_at)/60).round  %>分前
-                <% elsif  Time.now - user.created_at < 3600%>
-                  <%=((Time.now - user.created_at)/360).round  %>時間前
                 <% elsif  Time.now - user.created_at < 86400%>
+                  <%=((Time.now - user.created_at)/3600).round  %>時間前
+                <% else %>
                   <%=user.created_at.strftime('%-m月%-d日')%>
                 <%end%>
               </span>
@@ -95,5 +95,5 @@
       <% end %>
     <% end %>
   </div>
-    <%= paginate @posts if @posts.present? %>
+  <%= paginate @posts if @posts.present? %>
 </div>
