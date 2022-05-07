@@ -1,8 +1,8 @@
 <div class="container">
   <div class="page-header mt-5" id="banner">
     <div class="row">
-    <%= render 'shared/success_messages' %>
-  </div>
+      <%= render 'shared/success_messages' %>
+    </div>
     <p class="stile-news">
       <strong>Skypeちゃんねるだよｗへようこそ！</strong><br>
       ここはSkypeやLINEなど、<br>
@@ -35,23 +35,29 @@
               </a>
               <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_id%>">ID コピー</button>
             </div>
-            <div class="card-body">
-              <!--<h4 class="card-title"><%= link_to user.name, user, {class: "text-decoration-none"} %></h4>-->
-              <div class="content-body">
-                <%if user.text.length > 150 %>
-                  <!--追記-->
-                  <div class="truncated">
-                    <%= link_to simple_format(user.text.truncate(150,omission:"")), user, {class: "text-decoration-none"} %>
-                    <!--class="see-more"を追記-->
-                    <button type="button" class="see-more btn btn-secondary btn-sm">もっと見る</button>
-                  </div>
-                  <!-- 追記 style= "display: noneで 通常時は見えなくする-->
-                  <div class="untruncated" style="display: none">
-                    <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %></p>
-                  </div>
-                <% else %>
-                  <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
-                <% end %>
+            <div class="badge bg-secondary" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 0rem;">
+              <span style="float: left; padding-left: 5px;"><%=user.view_count%> View</span>
+              <span style="float: right; padding-right: 5px;">
+                <% if Time.now - user.created_at < 30%>
+                  たった今
+                <% elsif Time.now - user.created_at < 60%>
+                  <%=(Time.now - user.created_at).round  %>秒前
+                <% elsif Time.now - user.created_at < 360%>
+                  <%=((Time.now - user.created_at)/60).round  %>分前
+                <% elsif  Time.now - user.created_at < 3600%>
+                  <%=((Time.now - user.created_at)/360).round  %>時間前
+                <% elsif  Time.now - user.created_at < 86400%>
+                  <%=user.created_at.strftime('%-m月%-d日')%>
+                <%end%>
+              </span>
+            </div>
+            <div class="card-body cp_box pt-1">
+              <%if user.text.length > 200 %>
+                <input id="cp<%=user.id%>" type="checkbox">
+                <label for="cp<%=user.id%>"></label>
+              <% end %>
+              <div class="content-body cp_container">
+                <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
               </div>
             </div>
           </div>
@@ -66,25 +72,31 @@
                 <%= image_tag 'line_icon.png',size: '24x24' %>
                 <%=user.service_url.truncate(21,omission:"...") if user.service_url?%>
               </a>
-              <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_url%>">リンク コピー</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_url%>">ID コピー</button>
             </div>
-            <div class="card-body">
-              <!--<h4 class="card-title"><%= link_to user.name, user, {class: "text-decoration-none"} %></h4>-->
-              <div class="content-body">
-                <%if user.text.length > 150 %>
-                  <!--追記-->
-                  <div class="truncated">
-                    <%= link_to simple_format(user.text.truncate(150,omission:"")), user, {class: "text-decoration-none"} %>
-                    <!--class="see-more"を追記-->
-                    <button type="button" class="see-more btn btn-secondary btn-sm">もっと見る</button>
-                  </div>
-                  <!-- 追記 style= "display: noneで 通常時は見えなくする-->
-                  <div class="untruncated" style="display: none">
-                    <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %></p>
-                  </div>
-                <% else %>
-                  <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
-                <% end %>
+            <div class="badge bg-secondary" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 0rem;">
+              <span style="float: left; padding-left: 5px;"><%=user.view_count%> View</span>
+              <span style="float: right; padding-right: 5px;">
+                <% if Time.now - user.created_at < 30%>
+                  たった今
+                <% elsif Time.now - user.created_at < 60%>
+                  <%=(Time.now - user.created_at).round  %>秒前
+                <% elsif Time.now - user.created_at < 360%>
+                  <%=((Time.now - user.created_at)/60).round  %>分前
+                <% elsif  Time.now - user.created_at < 3600%>
+                  <%=((Time.now - user.created_at)/360).round  %>時間前
+                <% elsif  Time.now - user.created_at < 86400%>
+                  <%=user.created_at.strftime('%-m月%-d日')%>
+                <%end%>
+              </span>
+            </div>
+            <div class="card-body cp_box pt-1">
+              <%if user.text.length > 200 %>
+                <input id="cp<%=user.id%>" type="checkbox">
+                <label for="cp<%=user.id%>"></label>
+              <% end %>
+              <div class="content-body cp_container">
+                <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
               </div>
             </div>
           </div>
@@ -94,20 +106,3 @@
   </div>
   <%= paginate @posts %>
 </div>
-<script>
-  $('.see-more').click(function(){
-    console.log("================================================");
-    $(this).closest(".content-body").find(".truncated").hide();
-    $(this).closest(".content-body").find(".untruncated").show();
-  })
-  $('.id-copy').click(function(){    var type = "text/plain";
-    var blob = new Blob([$(this)[0].value], { type });
-    var data = [new ClipboardItem({ [type]: blob })];
-    navigator.clipboard.write(data).then(
-        function () {
-        },
-        function () {
-        }
-    );
-  })
-</script>

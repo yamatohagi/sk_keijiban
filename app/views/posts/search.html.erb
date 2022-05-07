@@ -6,14 +6,14 @@
       </div>
     </div>
   </div>
-  <div class="form-group col-md-6 p-1">
+  <div class="form-group col-md-6 p-1 mx-auto text-center">
     <%= form_tag(search_posts_url,:method => 'get') do %>
-      <input class="form-control m-1" name="id" value="<%= params[:id]%>" type="text" placeholder="Search">
-      <%= submit_tag "検索", class: "btn btn-primary m-1" %>
+      <input class="form-control m-1" name="id" value="<%= params[:id]%>" type="text" placeholder="IDや投稿文の内容">
+      <%= submit_tag "検索する", class: "btn btn-primary m-2" %>
     <% end %>
   </div>
   <div class="row">
-    <% @posts.each do |user| %>
+    <% @posts&.each do |user| %>
       <% if user.service_type == 'skype' %>
         <div class="col-md-4">
           <div class="<%= 'card border-primary h-100' if user.display_color == 'pink' %>
@@ -22,27 +22,33 @@
             <div class="card-header">
               <a class="text-decoration-none" href="<%= "skype:#{user.service_id}?chat"%>">
                 <%= image_tag 'sk_icon.png',size: '24x24' %>
-                <%=user.service_id.truncate(22,omission:"...")%>
+                <%=user.service_id.truncate(21,omission:"...")%>
               </a>
               <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_id%>">ID コピー</button>
             </div>
-            <div class="card-body">
-              <!--<h4 class="card-title"><%= link_to user.name, user, {class: "text-decoration-none"} %></h4>-->
-              <div class="content-body">
-                <%if user.text.length > 150 %>
-                  <!--追記-->
-                  <div class="truncated">
-                    <%= link_to simple_format(user.text.truncate(150,omission:"")), user, {class: "text-decoration-none"} %>
-                    <!--class="see-more"を追記-->
-                    <button type="button" class="see-more btn btn-secondary btn-sm">もっと見る</button>
-                  </div>
-                  <!-- 追記 style= "display: noneで 通常時は見えなくする-->
-                  <div class="untruncated" style="display: none">
-                    <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %></p>
-                  </div>
-                <% else %>
-                  <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
-                <% end %>
+            <div class="badge bg-secondary" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 0rem;">
+              <span style="float: left; padding-left: 5px;"><%=user.view_count%> View</span>
+              <span style="float: right; padding-right: 5px;">
+                <% if Time.now - user.created_at < 30%>
+                  たった今
+                <% elsif Time.now - user.created_at < 60%>
+                  <%=(Time.now - user.created_at).round  %>秒前
+                <% elsif Time.now - user.created_at < 360%>
+                  <%=((Time.now - user.created_at)/60).round  %>分前
+                <% elsif  Time.now - user.created_at < 3600%>
+                  <%=((Time.now - user.created_at)/360).round  %>時間前
+                <% elsif  Time.now - user.created_at < 86400%>
+                  <%=user.created_at.strftime('%-m月%-d日')%>
+                <%end%>
+              </span>
+            </div>
+            <div class="card-body cp_box pt-1">
+              <%if user.text.length > 200 %>
+                <input id="cp<%=user.id%>" type="checkbox">
+                <label for="cp<%=user.id%>"></label>
+              <% end %>
+              <div class="content-body cp_container">
+                <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
               </div>
             </div>
           </div>
@@ -55,27 +61,33 @@
             <div class="card-header">
               <a class="text-decoration-none" href="<%= user.service_url %>">
                 <%= image_tag 'line_icon.png',size: '24x24' %>
-                <%=user.service_url.truncate(22,omission:"...") if user.service_url?%>
+                <%=user.service_url.truncate(21,omission:"...") if user.service_url?%>
               </a>
-              <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_url%>">リンク コピー</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_url%>">ID コピー</button>
             </div>
-            <div class="card-body">
-              <!--<h4 class="card-title"><%= link_to user.name, user, {class: "text-decoration-none"} %></h4>-->
-              <div class="content-body">
-                <%if user.text.length > 150 %>
-                  <!--追記-->
-                  <div class="truncated">
-                    <%= link_to simple_format(user.text.truncate(150,omission:"")), user, {class: "text-decoration-none"} %>
-                    <!--class="see-more"を追記-->
-                    <button type="button" class="see-more btn btn-secondary btn-sm">もっと見る</button>
-                  </div>
-                  <!-- 追記 style= "display: noneで 通常時は見えなくする-->
-                  <div class="untruncated" style="display: none">
-                    <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %></p>
-                  </div>
-                <% else %>
-                  <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
-                <% end %>
+            <div class="badge bg-secondary" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 0rem;">
+              <span style="float: left; padding-left: 5px;"><%=user.view_count%> View</span>
+              <span style="float: right; padding-right: 5px;">
+                <% if Time.now - user.created_at < 30%>
+                  たった今
+                <% elsif Time.now - user.created_at < 60%>
+                  <%=(Time.now - user.created_at).round  %>秒前
+                <% elsif Time.now - user.created_at < 360%>
+                  <%=((Time.now - user.created_at)/60).round  %>分前
+                <% elsif  Time.now - user.created_at < 3600%>
+                  <%=((Time.now - user.created_at)/360).round  %>時間前
+                <% elsif  Time.now - user.created_at < 86400%>
+                  <%=user.created_at.strftime('%-m月%-d日')%>
+                <%end%>
+              </span>
+            </div>
+            <div class="card-body cp_box pt-1">
+              <%if user.text.length > 200 %>
+                <input id="cp<%=user.id%>" type="checkbox">
+                <label for="cp<%=user.id%>"></label>
+              <% end %>
+              <div class="content-body cp_container">
+                <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
               </div>
             </div>
           </div>
@@ -83,5 +95,5 @@
       <% end %>
     <% end %>
   </div>
-  <%= paginate @posts %>
+    <%= paginate @posts if @posts.present? %>
 </div>

@@ -5,6 +5,7 @@ class PostsController < ApplicationController
 
   def create
     post = params[:post].permit(:name, :title, :service_id, :text, :password, :display_color, :service_type, :service_url)
+    post[:view_count] = 0
     if post[:service_id].empty?
       post[:service_type] = "line"
     else
@@ -27,14 +28,14 @@ class PostsController < ApplicationController
       Post.find(params[:id]).discard
       redirect_to action: :index, errors: ["削除しました"]
     else
-      redirect_to  id: params[:id], errors: ["パスワードが違います"]
+      redirect_to id: params[:id], errors: ["パスワードが違います"]
     end
-
-
   end
 
   def show
     @post = Post.find(params[:id])
+    puts @post.view_count
+    @post.update(view_count: 1 + (@post.view_count || 0))
   end
 
   def index
@@ -42,9 +43,9 @@ class PostsController < ApplicationController
   end
 
   def search
-    Rails.logger.debug(params[:id])
-    Rails.logger.debug("params[:id]＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝")
-    posts = Post.where(service_id: params[:id]).or(Post.where(service_url: params[:id]))
-    @posts = Kaminari.paginate_array(posts).page(params[:page]).per(10)
+    if params[:id].present?
+      posts = Post.where(service_id: params[:id]).or(Post.where(service_url: params[:id])).or(Post.where('text like ?', "%#{params[:id]}%"))
+      @posts = Kaminari.paginate_array(posts).page(params[:page]).per(10)
+    end
   end
 end

@@ -26,6 +26,18 @@
             </div>
           </div>
         </div>
+        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_id), {class: "nav-link "} %>
+      </div>
+      <div class="col-md-5 p-5">
+        <%= form_with model: @post, method: :delete do |form| %>
+          <div class="form-group p-1">
+            <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
+            <div class="input-group mb-3">
+              <%= form.text_field :password, class: "form-control", value:"", placeholder: "空白の場合は[1234]に自動設定" %>
+              <%= form.submit "削除", class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
       </div>
     <% else %>
       <div class="col-md-4">
@@ -45,14 +57,18 @@
             </div>
           </div>
         </div>
+        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_url), {class: "nav-link "} %>
+      </div>
+      <div class="col-md-5 p-5">
+        <%= form_with model: @post, method: :delete do |form| %>
+          <div class="form-group p-1">
+            <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
+            <div class="input-group mb-3">
+              <%= form.text_field :password, class: "form-control", value:"", placeholder: "空白の場合は[1234]に自動設定" %>
+              <%= form.submit "削除", class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
-  <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_url), {class: "nav-link "} %>
-  <%= form_with model: @post, method: :delete do |form| %>
-    <div class="form-group col-md-3 p-1">
-      <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
-      <%= form.text_field :password, class: "form-control", value:"", placeholder: "空白の場合は[1234]に自動設定" %>
-      <%= form.submit "削除", class: "btn btn-outline-light mt-1" %>
-    </div>
-  <% end %>
