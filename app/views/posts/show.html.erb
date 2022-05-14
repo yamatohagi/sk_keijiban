@@ -16,7 +16,7 @@
           <div class="card-header">
             <a class="text-decoration-none" href="<%= "skype:#{@post.service_id}?chat"%>">
               <%= image_tag 'sk_icon.png',size: '24x24' %>
-              <%=@post.service_id.truncate(26,omission:"...")%>
+              <%=@post.service_id.truncate(20,omission:"...")%>
             </a>
             <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=@post.service_id%>">ID コピー</button>
           </div>
@@ -36,13 +36,15 @@
               <%end%>
             </span>
           </div>
-          <div class="card-body">
+          <div class="card-body pt-1">
             <div class="content-body">
               <p><%=simple_format(@post.text)%> </p>
             </div>
           </div>
         </div>
-        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_id), {class: "nav-link "} %>
+      </div>
+      <div class="p-1">
+        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_url), {class: "nav-link"} %>
       </div>
       <div class="col-md-5 p-1">
         <%= form_with model: @post, method: :delete do |form| %>
@@ -63,7 +65,7 @@
           <div class="card-header">
             <a class="text-decoration-none" href="<%= @post.service_url %>">
               <%= image_tag 'line_icon.png',size: '24x24' %>
-              <%=@post.service_url.truncate(26,omission:"...") if @post.service_url?%>
+              <%=@post.service_url.truncate(20,omission:"...") if @post.service_url?%>
             </a>
             <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=@post.service_url%>">リンク コピー</button>
           </div>
@@ -83,13 +85,15 @@
               <%end%>
             </span>
           </div>
-          <div class="card-body">
+          <div class="card-body pt-1">
             <div class="content-body">
               <p><%=simple_format(@post.text)%> </p>
             </div>
           </div>
         </div>
-        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_url), {class: "nav-link "} %>
+      </div>
+      <div class="p-1">
+        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_url), {class: "nav-link"} %>
       </div>
       <div class="col-md-5 p-1">
         <%= form_with model: @post, method: :delete do |form| %>
