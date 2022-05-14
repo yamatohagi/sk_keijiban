@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="p-1">
-        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_url), {class: "nav-link"} %>
+        <%= link_to 'このユーザーを検索', search_posts_url(:id => @post.service_id), {class: "nav-link"} %>
       </div>
       <div class="col-md-5 p-1">
         <%= form_with model: @post, method: :delete do |form| %>
