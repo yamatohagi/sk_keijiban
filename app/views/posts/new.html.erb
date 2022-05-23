@@ -1,13 +1,19 @@
 <div class="container">
   <div class="page-header mt-5" id="banner">
-
-      <div class="stile-news p-4">
+    <div class="row">
+      <% if params[:errors].present? %>
+        <ul class="errors" style="padding-top: 1px">
+          <% params[:errors].each do |e| %>
+            <div class="alert alert-warning"><%= e %></div>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="stile-news p-4">
       <h1>新規作成</h1>
       <strong>投稿画面へようこそ！</strong><br>
       <p>SkypeかLINEが選択できます。次回リリースでカカオも追加する予定です！</p>
-
     </div>
-
   </div>
   <ul class="nav nav-tabs">
     <li class="nav-item">
