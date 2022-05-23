@@ -31,7 +31,7 @@
             <div class="card-header">
               <a class="text-decoration-none" href="<%= "skype:#{user.service_id}?chat"%>">
                 <%= image_tag 'sk_icon.png',size: '24x24' %>
-                <%=user.service_id.truncate(21,omission:"...")%>
+                <%=user.service_id.truncate(19,omission:"...")%>
               </a>
               <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_id%>">ID コピー</button>
             </div>
@@ -70,7 +70,7 @@
             <div class="card-header">
               <a class="text-decoration-none" href="<%= user.service_url %>">
                 <%= image_tag 'line_icon.png',size: '24x24' %>
-                <%=user.service_url.truncate(21,omission:"...") if user.service_url?%>
+                <%=user.service_url.truncate(19,omission:"...") if user.service_url?%>
               </a>
               <button type="button" class="btn btn-outline-secondary btn-sm id-copy" value="<%=user.service_url%>">ID コピー</button>
             </div>
