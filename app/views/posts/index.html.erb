@@ -7,8 +7,10 @@
       <strong>Skypeちゃんねるだよｗへようこそ！</strong><br>
       ここはSkypeやLINEなど、<br>
       ネットの友だちが見つかる掲示板です。<br>
+
       あらゆる検索できるようになっているので、過去の投稿もぜひ探してみてください。<br>
       ※<%= link_to '利用前に必ず規約をご確認ください', pages_agreement_path %>
+
     </p>
     <div class="d-grid gap-2 col-xs-12 col-md-6 mt-3 mx-auto">
       <%= link_to new_post_path, {class: "btn btn-primary"} , target: "_blank" do %>
@@ -51,9 +53,13 @@
                 <%end%>
               </span>
             </div>
-            <div class="card-body pt-1">
+            <div class="card-body cp_box pt-1">
+              <%if user.text.length > 150 %>
+                <input id="cp<%=user.id%>" type="checkbox">
+                <label for="cp<%=user.id%>"></label>
+              <% end %>
               <div class="content-body cp_container">
-                <p><%= link_to (user.text).truncate(160,omission:"........"), user, {class: "text-decoration-none"} %> </p>
+                <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
               </div>
             </div>
           </div>
@@ -86,9 +92,13 @@
                 <%end%>
               </span>
             </div>
-            <div class="card-body pt-1">
+            <div class="card-body cp_box pt-1">
+              <%if user.text.length > 150 %>
+                <input id="cp<%=user.id%>" type="checkbox">
+                <label for="cp<%=user.id%>"></label>
+              <% end %>
               <div class="content-body cp_container">
-                <p><%= link_to (user.text).truncate(160,omission:"........"), user, {class: "text-decoration-none"} %> </p>
+                <p><%= link_to simple_format(user.text), user, {class: "text-decoration-none"} %> </p>
               </div>
             </div>
           </div>
