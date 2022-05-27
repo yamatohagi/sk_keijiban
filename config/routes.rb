@@ -6,4 +6,9 @@ Rails.application.routes.draw do
       get :search
     end
   end
+
+  namespace :pages do
+    get :agreement
+    get :about
+  end
 end
